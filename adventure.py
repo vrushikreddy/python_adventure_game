@@ -1,6 +1,7 @@
 import json
 import sys
 import random
+import traceback
 
 # Room class for Room attributes
 
@@ -12,9 +13,19 @@ class Room:
         self.exits = room_data['exits']
         self.items = room_data.get('items', [])
 
+
+# helper funtion
+def remove_extra_spaces(string):
+    # Remove leading and trailing spaces
+    string = string.strip()
+
+    # Replace multiple spaces with a single space
+    string = ' '.join(string.split())
+
+    return string
+
+
 # Game class
-
-
 class Game:
     # Init
     def __init__(self, map_file):
@@ -31,15 +42,26 @@ class Game:
                            'northeast', 'northwest', 'southeast', 'southwest']
 
     # Play funtion
+
     def play(self):
         self.print_details()
         while True:
-            user_input = input("What would you like to do? ")
+            try:
+                user_input = input("What would you like to do? ")
+            except EOFError:
+                print("Use 'quit' to exit.")
+                continue
+            except KeyboardInterrupt:
+                print('^C')
+                traceback.print_exc()
+                sys.exit(1)
+
+            user_input = remove_extra_spaces(user_input)
             if not user_input:
                 continue
             command = user_input.split()[0].lower()
             if command == "go":
-                if(user_input.strip()=="go"):
+                if (user_input.strip() == "go"):
                     print("Sorry, you need to 'go' somewhere.")
                     continue
                 direction = user_input.split()[1].lower()
@@ -48,7 +70,7 @@ class Game:
                 self.look()
             elif command == "get":
                 item = user_input.replace("get ", "")
-                if(user_input.strip()=="get"):
+                if (user_input.strip() == "get"):
                     print("Sorry, you need to 'get' something.")
                     continue
                 self.get(item)
@@ -68,8 +90,8 @@ class Game:
                         break
                 else:
                     print("I don't understand what you mean. Try again.")
-            
-    #printing room details
+
+    # printing room details
     def print_details(self):
         print("> " + self.current_room.name)
         print()
@@ -102,15 +124,6 @@ class Game:
         self.print_details()
 
     def get(self, item):
-        if item in self.current_room.items:
-            self.current_room.items.remove(item)
-            self.inventory.append(item)
-            print("You pick up the " + item + ".")
-        else:
-            print("There's no " + item + " anywhere.")
-
-    def get(self, item):
-
         if item == "vending":  # implementing the interaction
             print("You approached the vending machine. It seems to be working, but you need to pull the lever to get stuff.")
             print("What would you like to do? 'pull/quit")
@@ -130,13 +143,13 @@ class Game:
                     self.quit_game()
                 else:
                     print("I don't understand what you mean. Try again.")
-
-        elif item in self.current_room.items:
-            self.current_room.items.remove(item)
-            self.inventory.append(item)
-            print("You pick up the " + item + ".")
         else:
-            print("There's no " + item + " anywhere.")
+            if item in self.current_room.items:
+                self.current_room.items.remove(item)
+                self.inventory.append(item)
+                print("You pick up the " + item + ".")
+            else:
+                print("There's no " + item + " anywhere.")
 
     def drop(self, item):  # Implementing the drop extension
         if item in self.inventory:
@@ -148,9 +161,11 @@ class Game:
 
     def inventory_list(self):
         if self.inventory:
-            print("Inventory:\n" + "\n".join(self.inventory))
+            print("Inventory:")
+            for item in self.inventory:
+                print("  " + item)
         else:
-            print("You're not carring anything.")
+            print("You're not carrying anything.")
 
     def help(self):  # Implementing the help extension
         print("You can run the following commands: ")
@@ -158,7 +173,7 @@ class Game:
 
     def quit_game(self):
         print("Goodbye!")
-        sys.exit()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
