@@ -42,7 +42,8 @@ The code was tested by running the game with various map files and inputs, ensur
 No unresolved bugs or issues.
 
 ## Difficult issue or bug and its resolution
-An issue faced during development was handling get verb with items containing spaces such as 'ancient scroll'. For this case just replaced the 'get ' with '' to clean the input and handled accordingly.
+An issue faced during development was handling get verb with items containing spaces such as 'ancient scroll'. For this case stripped the input and replaced the 'get ' with '' to clean the input and handled accordingly.
+Another issue was the Gradlescope test runs were failing due to some errors in EOF exception handling, A 'while=True' was missing before the try catch block.
 
 ## Extensions implemented
 1. **Help Verb**: A dynamic help verb that lists all available verbs, generated from the defined verbs in the code. The help verb can be accessed by typing 'help' during gameplay.
@@ -53,4 +54,4 @@ To exercise these extensions, simply use the respective commands during gameplay
 
 
 ## Interaction implemented
-**Objects that demand custom verbs**: A **vending machine** will need the user to pull a lever and it randomly throws different items.
+**Objects that demand custom verbs**: A **vending machine** will need the user to pull a lever and it randomly throws different items from a set of predefined items.
