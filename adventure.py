@@ -173,7 +173,7 @@ class Game:
 
     def quit_game(self):
         print("Goodbye!")
-        sys.exit(1)
+        sys.exit()
 
 
 if __name__ == "__main__":
