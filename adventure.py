@@ -3,6 +3,8 @@ import sys
 import random
 
 # Room class for Room attributes
+
+
 class Room:
     def __init__(self, room_data):
         self.name = room_data['name']
@@ -11,6 +13,8 @@ class Room:
         self.items = room_data.get('items', [])
 
 # Game class
+
+
 class Game:
     # Init
     def __init__(self, map_file):
@@ -25,25 +29,28 @@ class Game:
                               'chocolate bar', 'soda can', 'gum']
         self.directions = ['east', 'west', 'north', 'south',
                            'northeast', 'northwest', 'southeast', 'southwest']
-    
+
     # Play funtion
     def play(self):
-        print("\n> " + self.current_room.name)
-        print(self.current_room.desc)
-        self.print_room_items()
-        self.print_exits()
+        self.print_details()
         while True:
-            user_input = input("\n> What would you like to do? ")
+            user_input = input("What would you like to do? ")
             if not user_input:
                 continue
             command = user_input.split()[0].lower()
             if command == "go":
+                if(user_input.strip()=="go"):
+                    print("Sorry, you need to 'go' somewhere.")
+                    continue
                 direction = user_input.split()[1].lower()
                 self.go(direction)
             elif command == "look":
                 self.look()
             elif command == "get":
                 item = user_input.replace("get ", "")
+                if(user_input.strip()=="get"):
+                    print("Sorry, you need to 'get' something.")
+                    continue
                 self.get(item)
             elif command == "drop":
                 item = user_input.split()[1].lower()
@@ -55,40 +62,44 @@ class Game:
             elif command == "quit":
                 self.quit_game()
             else:
-                for dir in self.directions: # Implementing the direction verb extension
+                for dir in self.directions:  # Implementing the direction verb extension
                     if command == dir:
                         self.go(dir)
                         break
                 else:
                     print("I don't understand what you mean. Try again.")
-    
-    # Printing room items
-    def print_room_items(self):
-        if self.current_room.items:
+            
+    #printing room details
+    def print_details(self):
+        print("> " + self.current_room.name)
+        print()
+        print(self.current_room.desc)
+        if not self.current_room.items:
+            print()
+        else:
+            print()
             print("Items:", ", ".join(self.current_room.items))
-    
+            print()
+        self.print_exits()
+        print()
+
     # Printing exits
+
     def print_exits(self):
         exits = self.current_room.exits.keys()
-        print("Exits:", ", ".join(exits))
-   
+        print("Exits:", " ".join(exits))
+
     def go(self, direction):
         if direction in self.current_room.exits:
             room_id = self.current_room.exits[direction]
             self.current_room = self.rooms[room_id]
             print("You go " + direction + ".\n")
-            print("> " + self.current_room.name)
-            print(self.current_room.desc)
-            self.print_room_items()
-            self.print_exits()
+            self.print_details()
         else:
             print("There's no way to go " + direction + ".")
 
     def look(self):
-        print("> " + self.current_room.name)
-        print(self.current_room.desc)
-        self.print_room_items()
-        self.print_exits()
+        self.print_details()
 
     def get(self, item):
         if item in self.current_room.items:
@@ -97,13 +108,13 @@ class Game:
             print("You pick up the " + item + ".")
         else:
             print("There's no " + item + " anywhere.")
-   
+
     def get(self, item):
 
         if item == "vending":  # implementing the interaction
             print("You approached the vending machine. It seems to be working, but you need to pull the lever to get stuff.")
             print("What would you like to do? 'pull/quit")
-            while True: #Main game loop
+            while True:  # Main game loop
                 user_input = input("> ")
                 if not user_input:
                     continue
@@ -127,7 +138,7 @@ class Game:
         else:
             print("There's no " + item + " anywhere.")
 
-    def drop(self, item): # Implementing the drop extension
+    def drop(self, item):  # Implementing the drop extension
         if item in self.inventory:
             self.inventory.remove(item)
             self.current_room.items.append(item)
@@ -139,9 +150,9 @@ class Game:
         if self.inventory:
             print("Inventory:\n" + "\n".join(self.inventory))
         else:
-            print("You're not carrying anything.")
+            print("You're not carring anything.")
 
-    def help(self): # Implementing the help extension
+    def help(self):  # Implementing the help extension
         print("You can run the following commands: ")
         print("\n".join(self.valid_verbs))
 
