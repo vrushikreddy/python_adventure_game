@@ -56,7 +56,7 @@ class Game:
             #     traceback.print_exc()
             #     sys.exit(1)
             user_input = input("What would you like to do? ")
-            user_input = remove_extra_spaces(user_input)
+            #user_input = remove_extra_spaces(user_input)
             if not user_input:
                 continue
             command = user_input.split()[0].lower()
