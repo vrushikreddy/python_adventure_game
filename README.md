@@ -1,10 +1,10 @@
 # Text-Based Adventure Game
 
 ## Author Information
-YourName (YourLogin)
+Vrushik Reddy
 
 ## Repository
-[Github Repository](Github/url)
+[Github Repository](https://github.com/vrushikreddy/python_adventure_game)
 
 ## How to run the program
 1. Install Python 3 if not already installed.
