@@ -76,8 +76,11 @@ class Game:
                     print("Sorry, you need to 'get' something.")
                     continue
                 self.get(item)
-            elif command == "drop":
-                item = user_input.split()[1].lower()
+            elif command == "drop": # drop extension
+                item = user_input.replace("drop ", "")
+                if (user_input.strip() == "drop"):
+                    print("Sorry, you need to 'drop' something.")
+                    continue
                 self.drop(item)
             elif command == "inventory":
                 self.inventory_list()
@@ -126,9 +129,9 @@ class Game:
         self.print_details()
 
     def get(self, item):
-        if item == "vending":  # implementing the interaction
-            print("You approached the vending machine. It seems to be working, but you need to pull the lever to get stuff.")
-            print("What would you like to do? 'pull/quit")
+        if item == "vending machine":  # implementing the interaction
+            print("You approached the vending machine. \nIt seems to be working, but you need to pull the lever to get stuff.")
+            print("What would you like to do? 'pull/quit'")
             while True:  # Main game loop
                 user_input = input("> ")
                 if not user_input:
@@ -138,11 +141,12 @@ class Game:
                     item_index = random.randint(0, len(self.vending_items) - 1)
                     item_picked = self.vending_items[item_index]
                     print(
-                        f"You pull the lever and a {item_picked} falls out. You pick it up and put it in your inventory.")
+                        f"You pull the lever and a {item_picked} falls out.\nYou picked it up and put it in your inventory.")
                     self.inventory.append(item_picked)
                     break
                 elif command == "quit":
-                    self.quit_game()
+                    print("You missed the chance!")
+                    break
                 else:
                     print("I don't understand what you mean. Try again.")
         else:
