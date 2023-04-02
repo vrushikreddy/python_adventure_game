@@ -2,7 +2,6 @@ import json
 import sys
 import random
 import traceback
-
 # Room class for Room attributes
 
 
@@ -41,21 +40,24 @@ class Game:
         self.directions = ['east', 'west', 'north', 'south',
                            'northeast', 'northwest', 'southeast', 'southwest']
 
-    # Play funtion
+    def getinput(self):
+        while True:
+            try:  # handling the EOF and KeyboardInterrupt
+                user_input = input("What would you like to do? ")
+            except EOFError:
+                print("Use 'quit' to exit.")
+                return ""
+            except KeyboardInterrupt:
+                print('^C')
+                traceback.print_exc()
+                sys.exit()
+            return user_input
 
+    # Play funtion
     def play(self):
         self.print_details()
         while True:
-#             try:  #handling the EOF and KeyboardInterrupt
-#                 user_input = input("What would you like to do? ")
-#             except EOFError:
-#                 print("Use 'quit' to exit.")
-#                 continue
-#             except KeyboardInterrupt:
-#                 print('^C')
-#                 traceback.print_exc()
-#                 sys.exit()
-            user_input = input("What would you like to do? ")
+            user_input = self.getinput()
             user_input = remove_extra_spaces(user_input)
             if not user_input:
                 continue
