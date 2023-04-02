@@ -2,6 +2,7 @@
 
 ## Author Information
 Vrushik Reddy
+vmuddam@stevens.edu
 
 ## Repository
 [Github Repository](https://github.com/vrushikreddy/python_adventure_game)
