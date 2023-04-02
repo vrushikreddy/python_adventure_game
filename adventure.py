@@ -46,16 +46,16 @@ class Game:
     def play(self):
         self.print_details()
         while True:
-            try:
-                user_input = input("What would you like to do? ")
-            except EOFError:
-                print("Use 'quit' to exit.")
-                continue
-            except KeyboardInterrupt:
-                print('^C')
-                traceback.print_exc()
-                sys.exit(1)
-
+            # try:
+            #     user_input = input("What would you like to do? ")
+            # except EOFError:
+            #     print("Use 'quit' to exit.")
+            #     continue
+            # except KeyboardInterrupt:
+            #     print('^C')
+            #     traceback.print_exc()
+            #     sys.exit(1)
+            user_input = input("What would you like to do? ")
             user_input = remove_extra_spaces(user_input)
             if not user_input:
                 continue
