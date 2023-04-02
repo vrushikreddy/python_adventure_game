@@ -1,0 +1,49 @@
+[
+    {
+        "name": "A purple room",
+        "desc": "You are in a purple room with blue walls.",
+        "exits": {
+            "north": 1,
+            "east": 3
+        },
+        "items": [
+            "padlock"
+        ]
+    },
+    {
+        "name": "A secret room",
+        "desc": "You are in a hidden room with dim lighting and mysterious artifacts.",
+        "exits": {
+            "east": 2,
+            "south": 0
+        },
+        "items": [
+            "ancient scroll",
+            "treasure chest"
+        ]
+    },
+    {
+        "name": "An yellow room",
+        "desc": "You are in a room with plenty of books, with yellow walls.",
+        "exits": {
+            "west": 1,
+            "south": 3
+        },
+        "items": [
+            "manuscript"
+        ]
+    },
+    {
+        "name": "A red room",
+        "desc": "This room is blood red. It's scary!",
+        "exits": {
+            "north": 2,
+            "west": 0,
+            "northwest" : 1
+        },
+        "items": [
+            "vending machine",
+            "knife"
+        ]
+    }
+]
